@@ -7,8 +7,8 @@ import { X, ArrowUpRight, Menu } from 'lucide-react'
 const LandingHeader = () => {
     const [open, setOpen] = useState<boolean>(false)
     return (
-        <header className="sticky top-0 z-50 w-full  backdrop-blur-md">
-            <div className="flex items-center justify-between px-10 py-8">
+        <header className="sticky top-0 z-50 w-full  backdrop-blur-md ">
+            <div className="flex items-center justify-between px-14 py-8">
 
                 {/* APP LOGO */}
                 <AppLogo />
