@@ -1,6 +1,6 @@
 import { useState } from "react"
 import AppLogo from "../Logos/AppLogo"
-import { NAV_LINKS } from "../../utils/navlinks"
+import { NAV_LINKS } from "../../constants/navlinks"
 import { X, ArrowUpRight, Menu } from 'lucide-react'
 
 

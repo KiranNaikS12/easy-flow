@@ -1,30 +1,24 @@
+import MinimalHeader from "../../components/Headers/MinimalHeader"
 import { Formik, Form, Field, } from 'formik';
 import { signupValidationSchema } from "../../utils/validation";
-import { useState } from "react";
-import { Role, type signupFormData } from "../../types/userTypes";
 import { Link } from "react-router-dom";
-import MinimalHeader from "../../components/Headers/MinimalHeader";
-import OrDivder from '../../components/common/OrDivder';
-import  PasswordField from '../../components/common/PasswordField';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import OrDivder from "../../components/common/OrDivder";
+import PasswordField from "../../components/common/PasswordField";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 
+const SignIn = () => {
 
 
-const Signup = () => {
-    const [formData, setFormData] = useState<signupFormData | null>(null);
+    const handleSubmit = () => {
 
-
-
-    const handleSubmit = (values: signupFormData) => {
-        console.log(values)
     }
+
 
     const handleGoogleSignIn = () => {
 
     }
-
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -40,25 +34,23 @@ const Signup = () => {
 
                             <Formik
                                 initialValues={{
+                                    username: "",
                                     email: "",
-                                    roleId: Role.Head,
                                     password: "",
                                     confirmPassword: ""
                                 }}
                                 validationSchema={signupValidationSchema}
                                 onSubmit={handleSubmit}
                             >
-                                {({ errors, touched }) => {
+                                {({ errors, touched }) => (
+                                    <Form className="flex w-full flex-col gap-5">
 
-                                    console.log("Errors:", errors,  touched);
-                                    return (
-                                        <Form className="flex w-full flex-col gap-5">
-                                            {/* Email */}
-                                            <div className="relative flex flex-col gap-2">
-                                                <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                                                    Email*
-                                                </label>
-                                                <FontAwesomeIcon
+                                        {/* Email */}
+                                        <div className="relative flex flex-col gap-2">
+                                            <label htmlFor="email" className="text-sm font-medium text-gray-700">
+                                                Email*
+                                            </label>
+                                             <FontAwesomeIcon
                                                     icon={faEnvelope}
                                                     className={`absolute transform -translate-y-1/2 top-13 left-4 ${errors.email && touched.email
                                                             ? "text-red-400"
@@ -66,22 +58,18 @@ const Signup = () => {
                                                         }`}
                                                 />
 
-                                                <Field id="email" name="email" type="email" placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400": "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
-                                            </div>
+                                            <Field id="email" name="email" type="email" placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400": "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
+                                        </div>
 
-                                            {/* Password */}
-                                            <PasswordField name="password" label="Password" errors={errors.password} touched={touched.password}/>
+                                        {/* Password */}
+                                        <PasswordField name="password" label="Password" errors={errors.password} touched={touched.password}/>
 
-                                            {/* Confirm Password */}
-                                            <PasswordField name="confirmPassword" label="Confirm Password" errors={errors.confirmPassword} touched={touched.confirmPassword}/>
+                                        <button type="submit" className="mt-2 w-full rounded-xl bg-theme px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
+                                            Sign In
+                                        </button>
 
-                                            <button type="submit" className="mt-2 w-full rounded-xl bg-theme px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
-                                                Create Account
-                                            </button>
-
-                                        </Form>
-                                    )
-                                }}
+                                    </Form>
+                                )}
 
                             </Formik>
 
@@ -104,9 +92,9 @@ const Signup = () => {
                             {/* Login section */}
                             <div className="mt-6 text-center">
                                 <p className="text-sm text-gray-600">
-                                    Already have an account?{" "}
-                                    <Link to="/login" className="text-blue-500">
-                                        Login Here
+                                    Don't have an account?{" "}
+                                    <Link to="/signup" className="text-themeColor text-blue-600">
+                                        Register Here
                                     </Link>
                                 </p>
                             </div>
@@ -126,8 +114,9 @@ const Signup = () => {
 
                 </div>
             </main>
+
         </div>
     )
 }
 
-export default Signup
+export default SignIn
