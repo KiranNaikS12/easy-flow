@@ -1,13 +1,16 @@
 import { Formik, Form, Field, } from 'formik';
 import { signupValidationSchema } from "../../utils/validation";
 import { useState } from "react";
-import { Role, type signupFormData } from "../../types/userTypes";
+import { Role, type signupFormData } from "../../types/authTypes/userTypes";
 import { Link } from "react-router-dom";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
-import OrDivder from '../../components/common/OrDivder';
-import  PasswordField from '../../components/common/PasswordField';
+import OrDivder from '../../components/Auth/OrDivder';
+import  PasswordField from '../../components/Common/PasswordField';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Illustration from '../../components/Auth/Illustration';
+import GoogleSignIn from '../../components/Auth/GoogleSignIn';
+import AuthRedirect from '../../components/Auth/AuthRedirect';
 
 
 
@@ -85,44 +88,19 @@ const Signup = () => {
 
                             </Formik>
 
-
-
                             {/* Bottom section - horizontal orDivder */}
                             <OrDivder />
 
                             {/* Sign in with google */}
-                            <div className="flex items-center justify-center mt-4">
-                                <img src="images/google.svg" alt="Google" className="w-5 h-5 mr-2" />
-                                <span
-                                    className="text-sm cursor-pointer text-themeColor hover:text-blue-600"
-                                    onClick={handleGoogleSignIn}
-                                >
-                                    Sign up with Google
-                                </span>
-                            </div>
+                            <GoogleSignIn onClick={handleGoogleSignIn}/>
 
                             {/* Login section */}
-                            <div className="mt-6 text-center">
-                                <p className="text-sm text-gray-600">
-                                    Already have an account?{" "}
-                                    <Link to="/login" className="text-blue-500">
-                                        Login Here
-                                    </Link>
-                                </p>
-                            </div>
+                            <AuthRedirect message="Already have an account?" linkText="Login Here" linkTo ="/login"/>
                         </div>
                     </div>
 
                     {/* Illustration section */}
-                    <div className="relative hidden w-105 shrink-0 bg-theme lg:block">
-
-                        {/* Top shape */}
-                        <div className="absolute -top-12 -left-12 h-32 w-125 -rotate-8 rounded-[30px] bg-[#61d9ad]" />
-
-                        {/* Bottom shape */}
-                        <div className="absolute -bottom-20 -left-5 h-72 w-150 rotate-[-24deg] rounded-[30px] bg-[#61d9ad]" />
-
-                    </div>
+                    <Illustration/>
 
                 </div>
             </main>

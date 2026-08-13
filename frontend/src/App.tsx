@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./Pages/Autherizer/Signup";
-import Landing from "./Pages/public/Landing";
-import SignIn from './Pages/public/SignIn'
+import Landing from "./Pages/Public/Landing";
+import SignIn from './Pages/Public/SignIn'
+
 
 const App = () => {
-
   return (
     <BrowserRouter>
       <Routes>

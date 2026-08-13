@@ -2,9 +2,7 @@ import { faEye, faEyeSlash, faLock } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Field } from "formik"
 import { useState } from "react";
-import type { PasswordFieldProps } from "../../types/passwordFieldTypes";
-
-
+import type { PasswordFieldProps } from "../../types/authTypes/passwordFieldTypes";
 
 
 const PasswordField = ({ name, label, errors, touched }: PasswordFieldProps) => {
