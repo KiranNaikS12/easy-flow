@@ -1,9 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import conntectdb from './config/conntectdb';
 
 
-dotenv.config()
+dotenv.config();
+conntectdb();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
