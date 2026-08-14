@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Signup from "./Pages/Autherizer/Signup";
+import Signup from "./Pages/Auth/Signup";
 import Landing from "./Pages/Public/Landing";
 import SignIn from './Pages/Public/SignIn'
 

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Field } from "formik"
 import { useState } from "react";
 import type { PasswordFieldProps } from "../../types/authTypes/passwordFieldTypes";
+import ValidationError from "./ValidationError";
 
 
 const PasswordField = ({ name, label, errors, touched }: PasswordFieldProps) => {
@@ -24,6 +25,7 @@ const PasswordField = ({ name, label, errors, touched }: PasswordFieldProps) => 
             />
 
             <Field id="confirmPassword" name={name} type={showPassword ? "text" : "password"} placeholder="Confirm password" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors && touched ? "border-red-400": "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
+            <ValidationError name={name}/>
             <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
                 onClick={() => setShowPassword((prev) => !prev)}

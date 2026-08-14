@@ -8,6 +8,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Illustration from "../../components/Auth/Illustration";
 import GoogleSignIn from "../../components/Auth/GoogleSignIn";
 import AuthRedirect from "../../components/Auth/AuthRedirect";
+import ValidationError from "../../components/Common/ValidationError";
 
 
 const SignIn = () => {
@@ -61,6 +62,7 @@ const SignIn = () => {
                                                 />
 
                                             <Field id="email" name="email" type="email" placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400": "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
+                                            <ValidationError name="email" />
                                         </div>
 
                                         {/* Password */}
