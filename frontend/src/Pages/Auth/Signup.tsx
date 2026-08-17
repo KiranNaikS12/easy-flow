@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage, } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { signupValidationSchema } from "../../utils/validation";
 import { useState } from "react";
 import { Role, type signupFormData } from "../../types/authTypes/userTypes";
@@ -11,25 +11,26 @@ import Illustration from '../../components/Auth/Illustration';
 import GoogleSignIn from '../../components/Auth/GoogleSignIn';
 import AuthRedirect from '../../components/Auth/AuthRedirect';
 import ValidationError from '../../components/Common/ValidationError';
-
-
-
+import CustomButton from '../../components/Common/CustomButton'
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../../features/auth/authSlice';
+import type { RootState } from '../../store/store';
 
 const Signup = () => {
-    const [formData, setFormData] = useState<signupFormData | null>(null);
+    // const [formData, setFormData] = useState<signupFormData | null>(null);
 
-
-
+    const dispatch = useDispatch();
+    const {userInfo} = useSelector((state: RootState) => state.auth)
+   
     const handleSubmit = (data: signupFormData) => {
-        if (data) {
-            setFormData(data)
-        }
+        const { email, roleId } = data;
+        dispatch(setCredentials({email, roleId}))
+        
     }
 
     const handleGoogleSignIn = () => {
 
     }
-
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -41,12 +42,12 @@ const Signup = () => {
                     {/* Form section */}
                     <div className="flex flex-1 items-center px-8 lg:px-14">
                         <div className="w-full max-w-md">
-                            <h1 className="mb-8 font-medium text-3xl">Create an account</h1>
+                            <h1 className="mb-8 font-medium text-3xl">Create an Account</h1>
 
                             <Formik
                                 initialValues={{
-                                    email: "",
-                                    roleId: Role.Head,
+                                    email: userInfo?.email || "",
+                                    roleId: userInfo?.roleId ?? Role.Head,
                                     password: "",
                                     confirmPassword: ""
                                 }}
@@ -69,7 +70,7 @@ const Signup = () => {
                                                         }`}
                                                 />
 
-                                                <Field id="email" name="email" type="email" placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400" : "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
+                                                <Field id="email" name="email" type="email"  placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400" : "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
                                                 <ValidationError name="email"/>
                                             </div>
 
@@ -80,9 +81,10 @@ const Signup = () => {
                                             {/* Confirm Password */}
                                             <PasswordField name="confirmPassword" label="Confirm Password" errors={errors.confirmPassword} touched={touched.confirmPassword} />
 
-                                            <button type="submit" className="mt-2 w-full rounded-xl bg-theme px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
-                                                Create Account
-                                            </button>
+                                            {/* Custom reusable button component */}
+                                            <CustomButton type="submit" className="mt-2 w-full rounded-xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
+                                                Create an Account
+                                            </CustomButton>
 
                                         </Form>
                                     )
