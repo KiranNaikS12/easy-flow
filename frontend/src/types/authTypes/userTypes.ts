@@ -1,5 +1,5 @@
 
-
+// Sign up form data types
 export enum Role {
     User = 'user',
     Head = 'head',
@@ -12,3 +12,11 @@ export type signupFormData =  {
     password: string,
     confirmPassword: string;
 }
+
+// user data 
+export interface UserData {
+    email: string;
+    roleId: Role,
+}
+
+
