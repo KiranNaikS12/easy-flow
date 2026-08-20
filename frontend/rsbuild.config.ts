@@ -5,4 +5,11 @@ import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
   plugins: [pluginReact(), pluginTailwindcss()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:5000",
+      },
+    },
+  },
 });

@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import { signupValidationSchema } from "../../utils/validation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Role, type signupFormData } from "../../types/authTypes/userTypes";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
 import OrDivder from '../../components/Auth/OrDivder';
@@ -27,6 +27,23 @@ const Signup = () => {
         dispatch(setCredentials({email, roleId}))
         
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+
+                const res = await fetch('api/test/')
+                if(res) {
+                    console.log(res)
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchData()
+    }, [])
 
     const handleGoogleSignIn = () => {
 
