@@ -15,8 +15,11 @@ export type signupFormData =  {
 
 // user data 
 export interface UserData {
+    _id:string;
     email: string;
     roleId: Role,
+    createdAt:Date | null;
+    updatedAt: Date | null;
 }
 
 

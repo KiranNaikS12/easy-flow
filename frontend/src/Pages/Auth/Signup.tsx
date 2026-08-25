@@ -1,6 +1,5 @@
 import { Formik, Form, Field } from 'formik';
 import { signupValidationSchema } from "../../utils/validation";
-import { useState, useEffect } from "react";
 import { Role, type signupFormData } from "../../types/authTypes/userTypes";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
 import OrDivder from '../../components/Auth/OrDivder';
@@ -12,38 +11,34 @@ import GoogleSignIn from '../../components/Auth/GoogleSignIn';
 import AuthRedirect from '../../components/Auth/AuthRedirect';
 import ValidationError from '../../components/Common/ValidationError';
 import CustomButton from '../../components/Common/CustomButton'
-import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials } from '../../features/auth/authSlice';
-import type { RootState } from '../../store/store';
+import { useDispatch } from 'react-redux';
+
+
 
 const Signup = () => {
-    // const [formData, setFormData] = useState<signupFormData | null>(null);
-
     const dispatch = useDispatch();
-    const {userInfo} = useSelector((state: RootState) => state.auth)
-   
-    const handleSubmit = (data: signupFormData) => {
-        const { email, roleId } = data;
-        dispatch(setCredentials({email, roleId}))
-        
-    }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
 
-                const res = await fetch('api/test/')
-                if(res) {
-                    console.log(res)
-                }
+    const handleSubmit = async (data: signupFormData) => {
+        const {email, roleId, password} = data;
+        try {
+            const res = await fetch("http://localhost:5000/api/auth/initiate-register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({email, roleId, password})
+            });
 
-            } catch (error) {
-                console.log(error)
-            }
+            const response = await res.json();
+            
+            dispatch(setCredentials(response?.user))
+            console.log(response.user);
+        } catch (error) {
+            console.log(error);
         }
-
-        fetchData()
-    }, [])
+    };
 
     const handleGoogleSignIn = () => {
 
@@ -63,8 +58,8 @@ const Signup = () => {
 
                             <Formik
                                 initialValues={{
-                                    email: userInfo?.email || "",
-                                    roleId: userInfo?.roleId ?? Role.Head,
+                                    email: "",
+                                    roleId: Role.Head,
                                     password: "",
                                     confirmPassword: ""
                                 }}
@@ -87,13 +82,13 @@ const Signup = () => {
                                                         }`}
                                                 />
 
-                                                <Field id="email" name="email" type="email"  placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400" : "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
-                                                <ValidationError name="email"/>
+                                                <Field id="email" name="email" type="email" placeholder="Eg: you@gmail.com" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors.email && touched.email ? "border-red-400" : "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
+                                                <ValidationError name="email" />
                                             </div>
 
                                             {/* Password */}
                                             <PasswordField name="password" label="Password" errors={errors.password} touched={touched.password} />
-                                            
+
 
                                             {/* Confirm Password */}
                                             <PasswordField name="confirmPassword" label="Confirm Password" errors={errors.confirmPassword} touched={touched.confirmPassword} />

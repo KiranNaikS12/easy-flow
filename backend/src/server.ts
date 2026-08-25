@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import conntectdb from './config/conntectdb';
-
+import authRoutes from './routes/authRoutes'
 
 dotenv.config();
 conntectdb();
@@ -16,13 +16,7 @@ app.use(cors({
     credentials:true,
 }))
 
-app.get("/api/test/", (req, res) => {
-    console.log("GET /api/test received");
-
-    res.json({
-        message: "Backend received the request"
-    })
-})
+app.use('/api/auth', authRoutes)
 
 
 app.listen(PORT, () => {
