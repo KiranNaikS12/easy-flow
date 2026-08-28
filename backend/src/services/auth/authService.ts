@@ -2,8 +2,11 @@ import { inject, injectable } from "inversify";
 import { IAuthService } from "./IAuthService";
 import { BaseAuthDetails } from "../../types/auth/authTypes";
 import { IUser } from "../../types/user/userTypes";
-import bcrypt from "bcryptjs";
 import { IAuthRepository } from "../../repositories/auth/IAuthRepository";
+import hashPassword from "../../utils/hashPassword";
+import bcrypt from "bcryptjs";
+import { CustomError } from "../../utils/customError";
+import { CustomMessages } from "../../utils/customMessage";
 
 @injectable()
 export class AuthService implements IAuthService {
@@ -18,18 +21,37 @@ export class AuthService implements IAuthService {
         const existingEmailByUser = await this.AuthRepository.findByEmail(userDetails.email)
         
         if(existingEmailByUser) {
-            throw new Error('User with this email already exists')
+            throw new CustomError(403, CustomMessages.USER_EXISTS)
         }
 
-        const hashPasswrod = await bcrypt.hash(userDetails.password, 10);
-
-        console.log('userDetails', userDetails)
+        const hashedPasswrod = await hashPassword(userDetails.password)
 
         const user = await this.AuthRepository.create({
             email: userDetails.email,
             roleId: userDetails.roleId,
-            password: hashPasswrod
+            isBlocked: false,
+            password: hashedPasswrod
         })
+
+        return user;
+    }
+
+    async initiateLogin(userDetails: BaseAuthDetails): Promise<IUser> {
+        const user = await this.AuthRepository.findByEmail(userDetails.email);
+        
+        if(!user) {
+            throw new CustomError(404, CustomMessages.USER_NOT_FOUND)
+        }
+
+        if(user.isBlocked) {
+            throw new CustomError(403, CustomMessages.USER_BLOCKED)
+        }
+
+        const isPasswordMatch = await bcrypt.compare(userDetails.password, user.password)
+
+        if(!isPasswordMatch) {
+            throw new CustomError(404, CustomMessages.INVALID_CREDENTIALS)
+        }
 
         return user;
     }

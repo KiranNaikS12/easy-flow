@@ -34,7 +34,6 @@ const Signup = () => {
             const response = await res.json();
             
             dispatch(setCredentials(response?.user))
-            console.log(response.user);
         } catch (error) {
             console.log(error);
         }

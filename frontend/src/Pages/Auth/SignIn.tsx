@@ -1,6 +1,6 @@
 import MinimalHeader from "../../components/Headers/MinimalHeader"
 import { Formik, Form, Field, } from 'formik';
-import { signupValidationSchema } from "../../utils/validation";
+import { baseValidationSchema } from "../../utils/validation";
 import OrDivder from "../../components/Auth/OrDivder";
 import PasswordField from "../../components/Common/PasswordField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,12 +10,27 @@ import GoogleSignIn from "../../components/Auth/GoogleSignIn";
 import AuthRedirect from "../../components/Auth/AuthRedirect";
 import ValidationError from "../../components/Common/ValidationError";
 import CustomButton from '../../components/Common/CustomButton'
+import type { singInFormData } from "../../types/authTypes/userTypes";
 
 const SignIn = () => {
+    
+    const handleSubmit = async(data: singInFormData) => {
+        console.log('called', data)
+         try { 
+            const res = await fetch("http://localhost:5000/api/auth/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
 
+            const response = await res.json();
+            console.log(response)
 
-    const handleSubmit = () => {
-
+         } catch(error) {
+            console.log(error)
+         }
     }
 
 
@@ -37,12 +52,10 @@ const SignIn = () => {
 
                             <Formik
                                 initialValues={{
-                                    username: "",
                                     email: "",
-                                    password: "",
-                                    confirmPassword: ""
+                                    password: ""
                                 }}
-                                validationSchema={signupValidationSchema}
+                                validationSchema={baseValidationSchema}
                                 onSubmit={handleSubmit}
                             >
                                 {({ errors, touched }) => (

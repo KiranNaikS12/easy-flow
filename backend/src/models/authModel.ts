@@ -14,6 +14,10 @@ const authSchema = new Schema<IUser>({
         enum: Object.values(Role),
         default: Role.User
     },
+    isBlocked: {
+        type: Boolean,
+        deafult: false,
+    },
     password:{
         type:String,
         required:true
