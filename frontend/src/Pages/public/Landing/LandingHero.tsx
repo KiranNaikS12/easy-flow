@@ -1,48 +1,10 @@
 import { FlaskConical, GraduationCap, RadioTower, UserPen } from 'lucide-react'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { cardVariants, containerVariants, textVarient } from '../../../constants/animation'
 
 
 const LandingHero: React.FC = () => {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
-    };
-
-    const cardVariants = {
-        hidden: {
-            opacity: 0
-        },
-        visible: {
-            opacity: 1,
-            transition: {
-                duration: 0.5
-            }
-        }
-    };
-
-    const textVarient = {
-        hidden: {
-            opacity: 0,
-            y: 50
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 12,
-                duration: 0.6
-            }
-        }
-    };
-
     return (
         <>
         <div className='min-h-screen bg-customGrey'>
