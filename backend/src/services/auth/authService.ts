@@ -7,6 +7,7 @@ import hashPassword from "../../utils/hashPassword";
 import bcrypt from "bcryptjs";
 import { CustomError } from "../../utils/customError";
 import { CustomMessages } from "../../utils/customMessage";
+import { HTTPStatusCode } from "../../utils/httpStatusCode";
 
 @injectable()
 export class AuthService implements IAuthService {
@@ -21,7 +22,7 @@ export class AuthService implements IAuthService {
         const existingEmailByUser = await this.AuthRepository.findByEmail(userDetails.email)
         
         if(existingEmailByUser) {
-            throw new CustomError(403, CustomMessages.USER_EXISTS)
+            throw new CustomError(HTTPStatusCode.FORBIDDEN, CustomMessages.USER_EXISTS)
         }
 
         const hashedPasswrod = await hashPassword(userDetails.password)
@@ -40,17 +41,17 @@ export class AuthService implements IAuthService {
         const user = await this.AuthRepository.findByEmail(userDetails.email);
         
         if(!user) {
-            throw new CustomError(404, CustomMessages.USER_NOT_FOUND)
+            throw new CustomError(HTTPStatusCode.NOT_FOUND, CustomMessages.USER_NOT_FOUND)
         }
 
         if(user.isBlocked) {
-            throw new CustomError(403, CustomMessages.USER_BLOCKED)
+            throw new CustomError(HTTPStatusCode.FORBIDDEN, CustomMessages.USER_BLOCKED)
         }
 
         const isPasswordMatch = await bcrypt.compare(userDetails.password, user.password)
 
         if(!isPasswordMatch) {
-            throw new CustomError(404, CustomMessages.INVALID_CREDENTIALS)
+            throw new CustomError(HTTPStatusCode.UNAUTHORIZED, CustomMessages.INVALID_CREDENTIALS)
         }
 
         return user;
