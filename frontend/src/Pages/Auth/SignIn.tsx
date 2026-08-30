@@ -11,8 +11,12 @@ import AuthRedirect from "../../components/Auth/AuthRedirect";
 import ValidationError from "../../components/Common/ValidationError";
 import CustomButton from '../../components/Common/CustomButton'
 import type { singInFormData } from "../../types/authTypes/userTypes";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../features/auth/authSlice";
 
 const SignIn = () => {
+
+    const dispatch = useDispatch();
     
     const handleSubmit = async(data: singInFormData) => {
         console.log('called', data)
@@ -26,7 +30,7 @@ const SignIn = () => {
             })
 
             const response = await res.json();
-            console.log(response)
+            dispatch(setCredentials(response?.user))
 
          } catch(error) {
             console.log(error)
