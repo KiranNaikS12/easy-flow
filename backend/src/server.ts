@@ -4,6 +4,7 @@ import cors from 'cors';
 import conntectdb from './config/conntectdb';
 import authRoutes from './routes/authRoutes'
 import cookieParser from 'cookie-parser';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 conntectdb();
@@ -19,6 +20,9 @@ app.use(cors({
 }))
 
 app.use('/api/auth', authRoutes)
+
+// ErrorHandler
+app.use(errorHandler)
 
 
 app.listen(PORT, () => {
