@@ -7,6 +7,8 @@ import { AuthRepository } from "../repositories/auth/authRepository";
 import { IAuthService } from "../services/auth/IAuthService";
 import { AuthService } from "../services/auth/authService";
 import { AuthController } from "../controllers/auth/authController";
+import { IJWTService } from "../services/jwt/IJWTService";
+import { JWTService } from "../services/jwt/JWTService";
 
 
 const container = new Container();
@@ -19,6 +21,7 @@ container.bind<IAuthRepository>('AuthRepository').to(AuthRepository);
 
 //Services
 container.bind<IAuthService>('AuthService').to(AuthService);
+container.bind<IJWTService>('JWTService').to(JWTService)
 
 //Controllers
 container.bind<AuthController>('AuthController').to(AuthController)

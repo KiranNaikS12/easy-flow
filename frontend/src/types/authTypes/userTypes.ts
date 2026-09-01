@@ -13,6 +13,11 @@ export type signupFormData =  {
     confirmPassword: string;
 }
 
+export type singInFormData = {
+    email: string;
+    password: string;
+}
+
 // user data 
 export interface UserData {
     _id:string;

@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import conntectdb from './config/conntectdb';
 import authRoutes from './routes/authRoutes'
+import cookieParser from 'cookie-parser';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 conntectdb();
@@ -11,12 +13,16 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials:true,
 }))
 
 app.use('/api/auth', authRoutes)
+
+// ErrorHandler
+app.use(errorHandler)
 
 
 app.listen(PORT, () => {

@@ -12,7 +12,7 @@ const PasswordField = ({ name, label, errors, touched }: PasswordFieldProps) => 
 
     return (
         <div className=" relative flex flex-col gap-2">
-            <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+            <label htmlFor={name} className="text-sm font-medium text-gray-700">
                 {label}*
             </label>
 
@@ -24,7 +24,7 @@ const PasswordField = ({ name, label, errors, touched }: PasswordFieldProps) => 
                     }`}
             />
 
-            <Field id="confirmPassword" name={name} type={showPassword ? "text" : "password"} placeholder="Confirm password" className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors && touched ? "border-red-400": "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
+            <Field id={name} name={name} type={showPassword ? "text" : "password"} placeholder={label} className={`w-full pl-12 placeholder-gray-400  placeholder:font-thin rounded-xl border ${errors && touched ? "border-red-400": "border-gray-300"} px-4 py-3 text-sm outline-none transition focus:border-b-theme focus:ring-2 focus:ring-theme/20`} />
             <ValidationError name={name}/>
             <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}

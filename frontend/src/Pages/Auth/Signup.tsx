@@ -13,28 +13,37 @@ import ValidationError from '../../components/Common/ValidationError';
 import CustomButton from '../../components/Common/CustomButton'
 import { setCredentials } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 const Signup = () => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
 
     const handleSubmit = async (data: signupFormData) => {
-        const {email, roleId, password} = data;
+        const { email, roleId, password } = data;
         try {
             const res = await fetch("http://localhost:5000/api/auth/initiate-register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({email, roleId, password})
+                body: JSON.stringify({ email, roleId, password })
             });
 
             const response = await res.json();
-            
-            dispatch(setCredentials(response?.user))
-            console.log(response.user);
+
+            if (!res.ok) {
+                console.log(response.message);
+                return;
+            }
+
+            dispatch(setCredentials(response.user));
+
+            navigate('/home');
+
         } catch (error) {
             console.log(error);
         }

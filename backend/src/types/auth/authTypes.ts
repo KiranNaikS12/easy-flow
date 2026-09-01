@@ -8,9 +8,8 @@ export enum Role {
 
 export interface BaseAuthDetails {
   email: string;
-  roleId: Role;
+  roleId?: Role;
   password: string;
-  confirmPassword: string;
 }
 
 export interface BaseAuth extends Document {
