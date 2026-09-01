@@ -4,7 +4,8 @@ import Landing from "./Pages/Public/Landing/LandingPage";
 import SignIn from './Pages/Auth/SignIn'
 import PrivateRoute from "./routes/PrivateRoute";
 import Home from "./Pages/User/Home";
-import PublicRoute from "./routes/publicRoute";
+import PublicRoute from "./routes/PublicRoute";
+
 
 
 const App = () => {
