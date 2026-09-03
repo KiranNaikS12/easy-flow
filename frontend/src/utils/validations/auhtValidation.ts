@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-// const nameRegex = /^[a-zA-Z]+$/;
+// Regex:
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
