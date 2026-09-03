@@ -1,6 +1,6 @@
 import MinimalHeader from "../../components/Headers/MinimalHeader"
 import { Formik, Form, Field, } from 'formik';
-import { baseValidationSchema } from "../../utils/validation";
+import { baseValidationSchema } from "../../utils/validations/auhtValidation";
 import OrDivder from "../../components/Auth/OrDivder";
 import PasswordField from "../../components/Common/PasswordField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +19,6 @@ const SignIn = () => {
     const dispatch = useDispatch();
     
     const handleSubmit = async(data: singInFormData) => {
-        console.log('called', data)
          try { 
             const res = await fetch("http://localhost:5000/api/auth/login", {
                 method: 'POST',

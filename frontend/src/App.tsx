@@ -3,8 +3,9 @@ import Signup from "./Pages/Auth/Signup";
 import Landing from "./Pages/Public/Landing/LandingPage";
 import SignIn from './Pages/Auth/SignIn'
 import PrivateRoute from "./routes/PrivateRoute";
-import Home from "./Pages/User/Home";
+import Home from "./Pages/Head/Home";
 import PublicRoute from "./routes/PublicRoute";
+import MemberList from "./Pages/Head/MemberLists";
 
 
 
@@ -20,6 +21,7 @@ const App = () => {
 
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/members" element={<MemberList/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

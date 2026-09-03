@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from 'formik';
-import { signupValidationSchema } from "../../utils/validation";
+import { signupValidationSchema } from "../../utils/validations/auhtValidation";
 import { Role, type signupFormData } from "../../types/authTypes/userTypes";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
 import OrDivder from '../../components/Auth/OrDivder';
