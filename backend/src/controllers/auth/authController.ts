@@ -5,7 +5,7 @@ import { IJWTService } from "../../services/jwt/IJWTService";
 import { setAuthCookie } from "../../utils/setCookie";
 import { CustomMessages } from "../../utils/customMessage";
 import { HTTPStatusCode } from "../../utils/httpStatusCode";
-import { IUser } from "../../types/user/userTypes";
+import { IUser } from "../../types/users/userTypes";
 
 @injectable()
 export class AuthController {
@@ -30,7 +30,7 @@ export class AuthController {
 
       setAuthCookie(res, token);
 
-      const { password, ...safeUser } = user.toObject();
+      const { password, ...safeUser } = user
 
       res.status(HTTPStatusCode.CREATED).json({
         message: CustomMessages.REGISTERED,
@@ -47,7 +47,7 @@ export class AuthController {
 
       res.status(HTTPStatusCode.OK).json({
         message: CustomMessages.LOGEDIN,
-        user: user.toObject(),
+        user: user
       });
   }
 

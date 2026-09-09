@@ -1,4 +1,4 @@
-import { IUser } from "../../types/user/userTypes";
+import { IUser } from "../../types/users/userTypes";
 import { IBaseRepository } from "../base/IBaseRepository";
 
 

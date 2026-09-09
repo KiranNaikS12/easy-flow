@@ -1,8 +1,8 @@
-import { Model, Document } from 'mongoose'
-import { IUser } from "../../types/user/userTypes";
+import { Model } from 'mongoose'
 import { BaseRepository } from "../base/baseRepository";
 import { IAuthRepository } from "./IAuthRepository";
 import { injectable, inject } from 'inversify';
+import { IUser } from '../../types/users/userTypes';
 
 
 @injectable()

@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { IAuthService } from "./IAuthService";
 import { BaseAuthDetails } from "../../types/auth/authTypes";
-import { IUser } from "../../types/user/userTypes";
+import { IUser } from "../../types/users/userTypes";
 import { IAuthRepository } from "../../repositories/auth/IAuthRepository";
 import hashPassword from "../../utils/hashPassword";
 import bcrypt from "bcryptjs";
@@ -22,7 +22,7 @@ export class AuthService implements IAuthService {
         const existingEmailByUser = await this.AuthRepository.findByEmail(userDetails.email)
         
         if(existingEmailByUser) {
-            throw new CustomError(HTTPStatusCode.FORBIDDEN, CustomMessages.USER_EXISTS)
+            throw new CustomError(HTTPStatusCode.CONFLICT, CustomMessages.USER_EXISTS)
         }
 
         const hashedPasswrod = await hashPassword(userDetails.password)
@@ -45,7 +45,7 @@ export class AuthService implements IAuthService {
         }
 
         if(user.isBlocked) {
-            throw new CustomError(HTTPStatusCode.FORBIDDEN, CustomMessages.USER_BLOCKED)
+            throw new CustomError(HTTPStatusCode.CONFLICT, CustomMessages.USER_BLOCKED)
         }
 
         const isPasswordMatch = await bcrypt.compare(userDetails.password, user.password)

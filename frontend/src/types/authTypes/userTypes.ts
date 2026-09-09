@@ -1,7 +1,7 @@
 
 // Sign up form data types
 export enum Role {
-    User = 'user',
+    Client = 'client',
     Head = 'head',
     Admin = 'admin'
 }

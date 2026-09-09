@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IUser } from "../types/user/userTypes";
+import { IUser } from "../types/users/userTypes";
 import { Role } from "../types/auth/authTypes";
 
 
@@ -12,7 +12,7 @@ const authSchema = new Schema<IUser>({
     roleId: {
         type: String,
         enum: Object.values(Role),
-        default: Role.User
+        default: Role.Head
     },
     isBlocked: {
         type: Boolean,
@@ -20,7 +20,8 @@ const authSchema = new Schema<IUser>({
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        select: false,
     },
 }, {
     timestamps: true

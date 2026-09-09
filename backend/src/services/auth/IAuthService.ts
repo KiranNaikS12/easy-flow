@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { BaseAuthDetails } from "../../types/auth/authTypes";
-import { IUser } from "../../types/user/userTypes";
+import { IUser } from "../../types/users/userTypes";
 
 
 export interface IAuthService {

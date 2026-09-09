@@ -1,7 +1,7 @@
 import { Document, Model, QueryFilter, UpdateQuery } from "mongoose";
 import { IBaseRepository } from "./IBaseRepository";
 
-export class BaseRepository<T extends Document> implements IBaseRepository<T> {
+export class BaseRepository<T > implements IBaseRepository<T> {
   protected model: Model<T>;
 
   constructor(initialModel: Model<T>) {
@@ -9,8 +9,7 @@ export class BaseRepository<T extends Document> implements IBaseRepository<T> {
   }
 
   async create(data: Partial<T>): Promise<T> {
-    const created = new this.model(data);
-    return await created.save();
+    return this.model.create(data);
   }
 
   async findById(id: string): Promise<T | null> {

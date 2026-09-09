@@ -1,6 +1,6 @@
-import { Document, QueryFilter, UpdateQuery } from "mongoose";
+import {  QueryFilter } from "mongoose";
 
-export interface IBaseRepository<T extends Document> {
+export interface IBaseRepository<T> {
     create(data: Partial<T>) : Promise<T>;
     findById(id: string) : Promise<T | null>;
     findOne(filter: QueryFilter<T>) : Promise<T | null>;

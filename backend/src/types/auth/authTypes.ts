@@ -1,7 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 export enum Role {
-  User = "user",
+  Client = "client",
   Head = "head",
   Admin = "admin",
 }
@@ -12,9 +12,8 @@ export interface BaseAuthDetails {
   password: string;
 }
 
-export interface BaseAuth extends Document {
+export interface BaseAuth {
     _id: mongoose.Types.ObjectId;
-    username: string;
     email: string;
     roleId: Role;
     isBlocked: boolean;

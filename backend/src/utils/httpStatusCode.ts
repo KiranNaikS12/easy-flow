@@ -4,6 +4,6 @@ export enum HTTPStatusCode {
     NOT_FOUND = 404,
     BAD_REQUEST = 400,
     INTERNAL_SERVER_ERROR = 500,
-    FORBIDDEN = 403,
+    CONFLICT = 403,
     UNAUTHORIZED = 401,
 }
