@@ -17,5 +17,12 @@ export const CATEGORY_OPTIONS = [
   { label: "Railway", value: "railway" },
   { label: "Music", value: "music" },
   { label: "Dance", value: "dance" },
+  { label: "Competitive Programming", value: "competitive-programming" },
+  { label: "Web Development", value: "web-development" },
+  { label: "Mobile Development", value: "mobile-development" },
+  {label: "Software Development", value: "software-development" },
+  { label: "AI/ML", value: "ai-ml" },
   { label: "Other", value: "other" },
 ];
+
+

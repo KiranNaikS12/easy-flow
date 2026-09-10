@@ -1,40 +1,84 @@
-import { Field, Form, Formik } from "formik"
-import { clientRegisterSchema } from "../../utils/validations/clientRegisterValidation"
-import ValidationError from "../Common/ValidationError"
-import { CATEGORY_OPTIONS } from "../../constants/categoryOptions"
-import CustomButton from "../Common/CustomButton"
-import CustomFormField from "./CustomFormField"
+import { Field, Form, Formik } from "formik";
+import { clientRegisterSchema } from "../../utils/validations/clientRegisterValidation";
+import ValidationError from "../Common/ValidationError";
+import { CATEGORY_OPTIONS } from "../../constants/enrollmentOptions";
+import CustomButton from "../Common/CustomButton";
+import CustomFormField from "./CustomFormField";
+import { X } from "lucide-react";
+import type { RegisterClientFormData } from "../../types/userType/clientTypes";
+import Swal from "sweetalert2";
 
 
+interface EnrollmentModalProps {
+    onClose: () => void;
+    type: "trainer" | "member";
+}
 
-const ClientEntrollmentModal = () => {
+const INITIAL_VALUES: RegisterClientFormData = {
+    fullName: "",
+    email: "",
+    phone: "",
+    dob: "",
+    category: "",
+    division: "",
+    parentContact: "",
+};
 
-    const handleSubmit = () => {
+const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
+    
 
+    const handleSubmit = async (data: RegisterClientFormData) => {
+       try {
+
+           const res = await fetch("http://localhost:5000/api/owner/clients", {
+               method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+           })
+
+            if (!res.ok) {
+                return;
+            }
+
+            const response = await res.json();
+
+            Swal.fire({
+                title: "Success",
+                text: response.message,
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false,
+                position: "top-end",
+                toast: true,
+            }).then(() => {
+                onClose()
+            })
+
+       } catch (error){
+          console.log(error)
+       }
     }
+    
 
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 ">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
             <div className="flex flex-col w-[75vw] h-[75vh] max-h-175 rounded-lg bg-white  px-8 py-10">
 
                 {/* Modal Header */}
-                <h2 className="font-semibold text-xl">
-                    Enroll Clients:
-                </h2>
+                <div className="flex justify-between items-center">
+                    <h2 className="font-semibold text-xl">
+                        Enroll Clients:
+                    </h2>
+                    <X onClick={onClose} className="cursor-pointer"/>
+                </div>
 
                 {/* Modal Content */}
                 <div className="flex-1 ">
                     <Formik
-                        initialValues={{
-                            fullName: "",
-                            email: "",
-                            phone: "",
-                            dob: "",
-                            category: "",
-                            division: "",
-                            parentContact: "",
-                        }}
+                        initialValues={INITIAL_VALUES}
                         validationSchema={clientRegisterSchema}
                         onSubmit={handleSubmit}
                     >
@@ -57,8 +101,8 @@ const ClientEntrollmentModal = () => {
                                     label="Email*"
                                     type="email"
                                     placeholder="Eg: your@gmail.com"
-                                    errors={errors.fullName}
-                                    touched={touched.fullName}
+                                    errors={errors.email}
+                                    touched={touched.email}
                                 />
 
                                 {/* Phone */}
@@ -66,9 +110,9 @@ const ClientEntrollmentModal = () => {
                                     name="phone"
                                     label="Phone Number*"
                                     type="tel"
-                                    placeholder="Eg: 9876543210"
-                                    errors={errors.fullName}
-                                    touched={touched.fullName}
+                                    placeholder="Eg: 9999999999"
+                                    errors={errors.phone}
+                                    touched={touched.phone}
                                 />
 
 
@@ -116,8 +160,8 @@ const ClientEntrollmentModal = () => {
                                     label="Division*"
                                     type="text"
                                     placeholder="Eg: A"
-                                    errors={errors.fullName}
-                                    touched={touched.fullName}
+                                    errors={errors.division}
+                                    touched={touched.division}
                                 />
 
                                 {/* Parent Contact */}
@@ -126,10 +170,10 @@ const ClientEntrollmentModal = () => {
                                     label="Parent Contact*"
                                     type="tel"
                                     placeholder="Eg: 9876543210"
-                                    errors={errors.fullName}
-                                    touched={touched.fullName}
+                                    errors={errors.parentContact}
+                                    touched={touched.parentContact}
                                 />
-                               
+
                                 <CustomButton type="submit" className="absolute bottom-0 right-0 bg-black px-6 font-semibold rounded-lg text-lg py-2 w-56 text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
                                     Register
                                 </CustomButton>
@@ -144,4 +188,4 @@ const ClientEntrollmentModal = () => {
     )
 }
 
-export default ClientEntrollmentModal
+export default EnrollmentModal;

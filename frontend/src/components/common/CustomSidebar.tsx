@@ -1,7 +1,7 @@
-import React  from 'react'
+import React from 'react'
 import AppLogo from '../Logos/AppLogo';
 import { X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut, } from '@fortawesome/free-solid-svg-icons';
 import { HEAD_SIDE_BAR } from '../../constants/navlinks';
@@ -15,32 +15,33 @@ const CustomSideBar = () => {
     const [collapsed, setCollapsed] = React.useState<boolean>(false);
     const { userInfo } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
+    const location = useLocation()
 
     const handleLogout = async () => {
         try {
-    
-          const res = await fetch('http://localhost:5000/api/auth/logout', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            credentials: 'include'
-          })
-    
-          const response = await res.json()
-    
-          if (!res.ok) {
-            console.log(response.message);
-            return;
-          }
-    
-          dispatch(clearCredentials());
-    
+
+            const res = await fetch('http://localhost:5000/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            })
+
+            const response = await res.json()
+
+            if (!res.ok) {
+                console.log(response.message);
+                return;
+            }
+
+            dispatch(clearCredentials());
+
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      }
-   
+    }
+
     return (
         <aside className={`h-screen bg-gray-200 text-black flex flex-col transition-[width] ease-in-out duration-300 ${collapsed ? 'w-20' : 'w-80'}`}>
 
@@ -63,12 +64,18 @@ const CustomSideBar = () => {
 
             {/* Navigation */}
             <nav className="flex-1 p-3 space-y-6 mt-8">
-                {HEAD_SIDE_BAR.map((item) => (
-                    <Link key={item.label} to={item.path} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 no-underline hover:bg-gray-300 hover:text-gray-900 transition-colors duration-200">
-                        <FontAwesomeIcon icon={item.icon} className="w-5 text-gray-500" />
-                        {!collapsed && <span className="text-md font-medium text-black">{item.label}</span>}
-                    </Link>
-                ))}
+                {HEAD_SIDE_BAR.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                        <Link key={item.label} to={item.path} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg no-underline transition-colors duration-200 
+                hover:bg-gray-300 hover:text-gray-900 
+                ${isActive ? 'bg-gray-300 text-gray-900' : 'text-gray-700'}`}>
+                            <FontAwesomeIcon icon={item.icon} className="w-5 text-gray-500" />
+                            {!collapsed && <span className="text-md font-medium text-black">{item.label}</span>}
+                        </Link>
+                    )
+
+                })}
                 <button onClick={handleLogout} className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 no-underline hover:bg-gray-300 hover:text-gray-900 transition-colors duration-200 cursor-pointer">
                     <FontAwesomeIcon icon={faSignOut} className="w-5 text-gray-500" />
                     {!collapsed && <span className="text-md font-medium text-black">Logout</span>}

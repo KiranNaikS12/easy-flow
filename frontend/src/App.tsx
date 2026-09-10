@@ -3,9 +3,10 @@ import Signup from "./Pages/Auth/Signup";
 import Landing from "./Pages/Public/Landing/LandingPage";
 import SignIn from './Pages/Auth/SignIn'
 import PrivateRoute from "./routes/PrivateRoute";
-import Home from "./Pages/Head/Home";
+import Home from "./Pages/Owner/Home";
 import PublicRoute from "./routes/PublicRoute";
-import MemberList from "./Pages/Head/MemberLists";
+import MemberList from "./Pages/Owner/ClientLists";
+import TrainerLists from "./Pages/Owner/TrainerLists";
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
           <Route path="/members" element={<MemberList/>}/>
+          <Route path="/trainers" element={<TrainerLists/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
