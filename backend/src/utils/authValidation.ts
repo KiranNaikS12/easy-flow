@@ -1,0 +1,17 @@
+import * as Yup from 'yup';
+
+// Regex:
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+export const baseAuthValidationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Email is required'),
+  password: Yup.string()
+    .matches(
+      passwordRegex,
+      'Password must be at least 6 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character',
+    )
+    .required('Password is required'),
+});

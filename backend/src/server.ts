@@ -2,7 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import conntectdb from './config/conntectdb';
-import authRoutes from './routes/authRoutes'
+import authRoutes from './routes/authRoutes';
+import ownerRoutes from './routes/ownerRoutes'
 import cookieParser from 'cookie-parser';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -19,7 +20,8 @@ app.use(cors({
     credentials:true,
 }))
 
-app.use('/api/auth', authRoutes)
+app.use('/api/auth', authRoutes);
+app.use('/api/owner', ownerRoutes)
 
 // ErrorHandler
 app.use(errorHandler)
