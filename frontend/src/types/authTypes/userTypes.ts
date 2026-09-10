@@ -8,7 +8,6 @@ export enum Role {
 
 export type signupFormData =  {
     email: string,
-    roleId: Role,
     password: string,
     confirmPassword: string;
 }

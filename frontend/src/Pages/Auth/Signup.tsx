@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import { signupValidationSchema } from "../../utils/validations/auhtValidation";
-import { Role, type signupFormData } from "../../types/authTypes/userTypes";
+import { type signupFormData } from "../../types/authTypes/userTypes";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
 import OrDivder from '../../components/Auth/OrDivder';
 import PasswordField from '../../components/Common/PasswordField';
@@ -16,24 +16,30 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-
+const INITIAL_VALUES: signupFormData = {
+    email: "",
+    password: "",
+    confirmPassword: ""
+}
 
 const Signup = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
     const handleSubmit = async (data: signupFormData) => {
-        const { email, roleId, password } = data;
+        const { email,  password } = data;
         try {
-            const res = await fetch("http://localhost:5000/api/auth/initiate-register", {
+            const res = await fetch("http://localhost:5000/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email, roleId, password })
+                body: JSON.stringify({ email, password })
             });
 
             const response = await res.json();
+
+            console.log(response)
 
             if (!res.ok) {
                 console.log(response.message);
@@ -66,12 +72,7 @@ const Signup = () => {
                             <h1 className="mb-8 font-medium text-3xl">Create an Account</h1>
 
                             <Formik
-                                initialValues={{
-                                    email: "",
-                                    roleId: Role.Head,
-                                    password: "",
-                                    confirmPassword: ""
-                                }}
+                                initialValues={INITIAL_VALUES}
                                 validationSchema={signupValidationSchema}
                                 onSubmit={handleSubmit}
                             >

@@ -30,7 +30,7 @@ export class AuthController {
 
       setAuthCookie(res, token);
 
-      const { password, ...safeUser } = user
+      const { password, ...safeUser } = user.toObject()
 
       res.status(HTTPStatusCode.CREATED).json({
         message: CustomMessages.REGISTERED,
@@ -41,13 +41,15 @@ export class AuthController {
   async login(req: Request, res: Response): Promise<void> {
       const user = await this.authService.initiateLogin(req.body);
 
-      const token =  this.generateAuthToken(user)
+      const token =  this.generateAuthToken(user);
+
+      console.log(token)
 
       setAuthCookie(res, token);
 
       res.status(HTTPStatusCode.OK).json({
         message: CustomMessages.LOGEDIN,
-        user: user
+        user: user.toObject()
       });
   }
 

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { IAuthService } from "./IAuthService";
-import { BaseAuthDetails } from "../../types/auth/authTypes";
+import { BaseAuthDetails, Role } from "../../types/auth/authTypes";
 import { IUser } from "../../types/users/userTypes";
 import { IAuthRepository } from "../../repositories/auth/IAuthRepository";
 import hashPassword from "../../utils/hashPassword";
@@ -29,7 +29,7 @@ export class AuthService implements IAuthService {
 
         const user = await this.AuthRepository.create({
             email: userDetails.email,
-            roleId: userDetails.roleId,
+            roleId: Role.Head,
             isBlocked: false,
             password: hashedPasswrod
         })

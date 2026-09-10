@@ -25,11 +25,17 @@ const SignIn = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(data)
             })
 
             const response = await res.json();
-            dispatch(setCredentials(response?.user))
+
+            if (!res.ok) {
+                return;
+            }
+
+            dispatch(setCredentials(response.user))
 
          } catch(error) {
             console.log(error)

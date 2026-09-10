@@ -7,5 +7,6 @@ export const CustomMessages = {
     LOGEDIN: 'Login Successfull',
     SERVER_ERROR: 'Internal server error',
     LOGOUT: 'User logout successfully',
-    LOGOUT_ERROR: 'Something went wrong'
+    LOGOUT_ERROR: 'Something went wrong',
+    VALIDATION_ERROR: 'Validation failed'
 }

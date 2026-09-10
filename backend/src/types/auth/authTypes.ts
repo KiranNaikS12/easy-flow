@@ -12,7 +12,7 @@ export interface BaseAuthDetails {
   password: string;
 }
 
-export interface BaseAuth {
+export interface BaseAuth extends Document{
     _id: mongoose.Types.ObjectId;
     email: string;
     roleId: Role;
