@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import { signupValidationSchema } from "../../utils/validations/auhtValidation";
-import { type signupFormData } from "../../types/authTypes/userTypes";
+import { type signupFormData } from "../../types/authTypes/baseAuthType";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
 import OrDivder from '../../components/Auth/OrDivder';
 import PasswordField from '../../components/Common/PasswordField';
@@ -39,8 +39,6 @@ const Signup = () => {
 
             const response = await res.json();
 
-            console.log(response)
-
             if (!res.ok) {
                 console.log(response.message);
                 return;
@@ -48,7 +46,7 @@ const Signup = () => {
 
             dispatch(setCredentials(response.user));
 
-            navigate('/home');
+            navigate('/account-setup');
 
         } catch (error) {
             console.log(error);

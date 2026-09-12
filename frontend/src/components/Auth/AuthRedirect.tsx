@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import type { AuthRedirectProps } from "../../types/authTypes/authRedirectTypes"
+import type { AuthRedirectProps } from "../../types/componentTypes.ts/authRedirectTypes"
 
 
 

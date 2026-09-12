@@ -1,4 +1,4 @@
-import type { GoogleSignInProps } from "../../types/authTypes/googleAuthTypes"
+import type { GoogleSignInProps } from "../../types/componentTypes.ts/googleAuthTypes"
 
 
 const GoogleSignIn = ({onClick}: GoogleSignInProps) => {

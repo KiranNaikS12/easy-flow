@@ -1,4 +1,4 @@
-import type { ButtonProps } from "../../types/common/buttonTypes"
+import type { ButtonProps } from "../../types/componentTypes.ts/buttonTypes"
 
 
 const Button = ({type = "button", children, onClick, className}: ButtonProps) => {

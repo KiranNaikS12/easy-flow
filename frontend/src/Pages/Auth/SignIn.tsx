@@ -10,7 +10,7 @@ import GoogleSignIn from "../../components/Auth/GoogleSignIn";
 import AuthRedirect from "../../components/Auth/AuthRedirect";
 import ValidationError from "../../components/Common/ValidationError";
 import CustomButton from '../../components/Common/CustomButton'
-import type { singInFormData } from "../../types/authTypes/userTypes";
+import type { singInFormData } from "../../types/authTypes/baseAuthType";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
 
