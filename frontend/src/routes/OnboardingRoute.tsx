@@ -3,18 +3,18 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { Navigate, Outlet } from "react-router-dom";
 
-const PublicRoute: React.FC = () => {
+const OnboardingRoute: React.FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
   if (!userInfo) {
-    return <Outlet />;
+    return <Navigate to="/login" replace />;
   }
 
-  if (!userInfo.isProfileCompleted) {
-    return <Navigate to="/account-setup" replace />;
+  if (userInfo.isProfileCompleted) {
+    return <Navigate to="/home" replace />;
   }
 
-  return <Navigate to="/home" replace />;
+  return <Outlet />;
 };
 
-export default PublicRoute;
+export default OnboardingRoute;
