@@ -8,5 +8,4 @@ export interface UserData {
     isProfileCompleted: boolean;
     createdAt:Date | null;
     updatedAt: Date | null;
-
 }

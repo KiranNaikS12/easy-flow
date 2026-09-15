@@ -5,7 +5,7 @@ import { IJWTService } from "../../services/jwt/IJWTService";
 import { setAuthCookie } from "../../utils/setCookie";
 import { CustomMessages } from "../../utils/customMessage";
 import { HTTPStatusCode } from "../../utils/httpStatusCode";
-import { IUser } from "../../types/users/userTypes";
+import { IOwner } from "../../types/users/ownerTypes";
 
 @injectable()
 export class AuthController {
@@ -14,7 +14,7 @@ export class AuthController {
     @inject("JWTService") private JWTService: IJWTService,
   ) {}
 
-  private generateAuthToken = (user: IUser): string => {
+  private generateAuthToken = (user: IOwner): string => {
     return this.JWTService.generateAccessToken(
       user._id.toString(),
       user.roleId
@@ -25,6 +25,7 @@ export class AuthController {
   async register(req: Request, res: Response): Promise<void> {
       const user = await this.authService.initiateRegistration(req.body);
 
+    
       // Generate jsonweb token
       const token =  this.generateAuthToken(user)
 

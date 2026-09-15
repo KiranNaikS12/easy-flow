@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { IAuthService } from "./IAuthService";
 import { BaseAuthDetails, Role } from "../../types/auth/authTypes";
-import { IUser } from "../../types/users/userTypes";
+import { IOwner } from "../../types/users/ownerTypes";
 import { IAuthRepository } from "../../repositories/auth/IAuthRepository";
 import hashPassword from "../../utils/hashPassword";
 import bcrypt from "bcryptjs";
@@ -17,7 +17,7 @@ export class AuthService implements IAuthService {
         
     }
 
-    async initiateRegistration(userDetails: BaseAuthDetails): Promise<IUser> {
+    async initiateRegistration(userDetails: BaseAuthDetails): Promise<IOwner> {
 
         const existingEmailByUser = await this.AuthRepository.findByEmail(userDetails.email)
         
@@ -27,17 +27,19 @@ export class AuthService implements IAuthService {
 
         const hashedPasswrod = await hashPassword(userDetails.password)
 
+       
         const user = await this.AuthRepository.create({
             email: userDetails.email,
             roleId: Role.Head,
             isBlocked: false,
-            password: hashedPasswrod
+            password: hashedPasswrod,
+            isProfileCompleted: false,
         })
 
         return user;
     }
 
-    async initiateLogin(userDetails: BaseAuthDetails): Promise<IUser> {
+    async initiateLogin(userDetails: BaseAuthDetails): Promise<IOwner> {
         const user = await this.AuthRepository.findByEmail(userDetails.email);
         
         if(!user) {
