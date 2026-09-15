@@ -5,7 +5,16 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const PrivateRoute:React.FC = () => {
     const { userInfo } = useSelector((state: RootState) => state.auth)
-    return userInfo ? <Outlet/> : <Navigate to="/login" replace/>
+    
+    if(!userInfo) {
+        return <Navigate to="/login" replace/>
+    }
+
+    if(!userInfo.isProfileCompleted) {
+        return <Navigate to="/account-setup" replace/>
+    }
+
+    return <Outlet/>
 }
 
 export default PrivateRoute

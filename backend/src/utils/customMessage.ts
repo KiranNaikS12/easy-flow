@@ -8,5 +8,7 @@ export const CustomMessages = {
     SERVER_ERROR: 'Internal server error',
     LOGOUT: 'User logout successfully',
     LOGOUT_ERROR: 'Something went wrong',
-    VALIDATION_ERROR: 'Validation failed'
+    VALIDATION_ERROR: 'Validation failed',
+    ACCOUNT_CREATION_SUCCESSFULL: 'Account setup successfull',
+    INSTITUTION_EXISTS: 'Institution name already exists'
 }
