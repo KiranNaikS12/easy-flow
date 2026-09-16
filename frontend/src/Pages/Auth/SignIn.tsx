@@ -13,6 +13,7 @@ import CustomButton from '../../components/Common/CustomButton'
 import type { singInFormData } from "../../types/authTypes/userTypes";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
 
@@ -30,7 +31,17 @@ const SignIn = () => {
             })
 
             const response = await res.json();
+<<<<<<< Updated upstream
             dispatch(setCredentials(response?.user))
+=======
+
+            if (!res.ok) {
+                toast.error(response.message)
+                return;
+            }
+
+            dispatch(setCredentials(response.user))
+>>>>>>> Stashed changes
 
          } catch(error) {
             console.log(error)
