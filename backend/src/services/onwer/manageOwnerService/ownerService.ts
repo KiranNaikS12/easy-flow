@@ -32,10 +32,9 @@ export class OwnerService implements IOwnerService {
             isProfileCompleted: true
         }
 
-        const updateOwner = await this.ownerRepository.update(
-            ownerId,
-            updatedDetails
-        )
+
+        const updateOwner = await this.ownerRepository.update(ownerId, updatedDetails);
+        
 
         if(!updateOwner) {
             throw new CustomError(HTTPStatusCode.NOT_FOUND, CustomMessages.USER_NOT_FOUND)

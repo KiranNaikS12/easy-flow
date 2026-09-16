@@ -32,15 +32,12 @@ const authSchema = new Schema<IOwner>({
     },
     institutionType: {
         type: String,
-        unique: true
     },
     phone: {
         type: String,
-        unique: true
     },
     description: {
        type: String,
-       unique: true
     },
     services: {
         type: [String],

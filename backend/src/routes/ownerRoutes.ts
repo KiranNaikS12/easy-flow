@@ -4,6 +4,7 @@ import { ManageClientController } from "../controllers/owner/manageClientControl
 import { validate } from "../middleware/validate";
 import { clientRegisterSchema } from "../utils/clientValidation";
 import { ManageOwnerController } from "../controllers/owner/manageOwnerController";
+import { accountSetupValidationSchema } from "../utils/ownerValidation";
 
 
 const router = express.Router();
@@ -12,7 +13,7 @@ const manageClientController = container.get<ManageClientController>('ManageClie
 const manageOwnerController = container.get<ManageOwnerController>('ManageOwnerController')
 
 
-router.post('/account-setup', (req, res) => manageOwnerController.setupAccount(req, res))
+router.post('/account-setup', validate(accountSetupValidationSchema), (req, res) => manageOwnerController.setupAccount(req, res))
 router.post('/clients',validate(clientRegisterSchema), (req, res) => manageClientController.registerClient(req, res))
 
 
