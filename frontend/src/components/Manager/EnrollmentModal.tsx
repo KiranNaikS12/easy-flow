@@ -1,12 +1,13 @@
 import { Field, Form, Formik } from "formik";
 import { clientRegisterSchema } from "../../utils/validations/clientRegisterValidation";
 import ValidationError from "../Common/ValidationError";
-import { CATEGORY_OPTIONS } from "../../constants/enrollmentOptions";
 import CustomButton from "../Common/CustomButton";
 import CustomFormField from "./CustomFormField";
 import { X } from "lucide-react";
 import type { RegisterClientFormData } from "../../types/userType/clientTypes";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 
 interface EnrollmentModalProps {
@@ -24,19 +25,20 @@ const INITIAL_VALUES: RegisterClientFormData = {
     parentContact: "",
 };
 
-const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
-    
+const EnrollmentModal = ({ onClose, type }: EnrollmentModalProps) => {
+
+    const { userInfo } = useSelector((state: RootState) => state.auth)
 
     const handleSubmit = async (data: RegisterClientFormData) => {
-       try {
+        try {
 
-           const res = await fetch("http://localhost:5000/api/owner/clients", {
-               method: "POST",
+            const res = await fetch("http://localhost:5000/api/owner/clients", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
-           })
+            })
 
             if (!res.ok) {
                 return;
@@ -56,12 +58,10 @@ const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
                 onClose()
             })
 
-       } catch (error){
-          console.log(error)
-       }
+        } catch (error) {
+            console.log(error)
+        }
     }
-    
-
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
@@ -72,7 +72,7 @@ const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
                     <h2 className="font-semibold text-xl">
                         Enroll Clients:
                     </h2>
-                    <X onClick={onClose} className="cursor-pointer"/>
+                    <X onClick={onClose} className="cursor-pointer" />
                 </div>
 
                 {/* Modal Content */}
@@ -83,45 +83,50 @@ const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
                         onSubmit={handleSubmit}
                     >
                         {({ errors, touched }) => (
+
                             <Form className="relative grid h-full grid-cols-2 gap-5 px-0 py-10">
 
                                 {/* Full Name */}
-                                <CustomFormField
-                                    name="fullName"
-                                    label="Full Name*"
-                                    type="text"
-                                    placeholder="Eg: John Doe"
-                                    errors={errors.fullName}
-                                    touched={touched.fullName}
-                                />
+                                <div className="relative flex flex-col gap-2">
+                                    <CustomFormField
+                                        name="fullName"
+                                        label="Full Name*"
+                                        type="text"
+                                        placeholder="Eg: John Doe"
+                                    />
+                                </div>
+
 
                                 {/* Email */}
-                                <CustomFormField
-                                    name="email"
-                                    label="Email*"
-                                    type="email"
-                                    placeholder="Eg: your@gmail.com"
-                                    errors={errors.email}
-                                    touched={touched.email}
-                                />
+                                <div className="relative flex flex-col gap-2">
+                                    <CustomFormField
+                                        name="email"
+                                        label="Email*"
+                                        type="email"
+                                        placeholder="Eg: your@gmail.com"
+                                    />
+                                </div>
+
 
                                 {/* Phone */}
-                                <CustomFormField
-                                    name="phone"
-                                    label="Phone Number*"
-                                    type="tel"
-                                    placeholder="Eg: 9999999999"
-                                    errors={errors.phone}
-                                    touched={touched.phone}
-                                />
+                                <div className="relative flex flex-col gap-2">
+                                    <CustomFormField
+                                        name="phone"
+                                        label="Phone Number*"
+                                        type="tel"
+                                        placeholder="Eg: 9999999999"
+                                    />
+                                </div>
 
 
                                 {/* Date of Birth */}
-                                <CustomFormField
-                                    name="dob"
-                                    label="Date of Birth*"
-                                    type="date"
-                                />
+                                <div className="relative flex flex-col gap-2">
+                                    <CustomFormField
+                                        name="dob"
+                                        label="Date of Birth*"
+                                        type="date"
+                                    />
+                                </div>
 
 
                                 {/* Category */}
@@ -144,9 +149,9 @@ const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
                                     >
                                         <option value="">Select Category</option>
 
-                                        {CATEGORY_OPTIONS.map((category) => (
-                                            <option key={category.label} value={category.value}>
-                                                {category.value}
+                                        {userInfo?.services.map((category) => (
+                                            <option key={category} value={category}>
+                                                {category}
                                             </option>
                                         ))}
                                     </Field>
@@ -155,30 +160,32 @@ const EnrollmentModal = ({onClose, type}: EnrollmentModalProps) => {
                                 </div>
 
                                 {/* Division */}
-                                <CustomFormField
-                                    name="division"
-                                    label="Division*"
-                                    type="text"
-                                    placeholder="Eg: A"
-                                    errors={errors.division}
-                                    touched={touched.division}
-                                />
+                                <div className="relative flex flex-col gap-2">
+                                    <CustomFormField
+                                        name="division"
+                                        label="Division*"
+                                        type="text"
+                                        placeholder="Eg: A"
+                                    />
+                                </div>
+
 
                                 {/* Parent Contact */}
-                                <CustomFormField
-                                    name="parentContact"
-                                    label="Parent Contact*"
-                                    type="tel"
-                                    placeholder="Eg: 9876543210"
-                                    errors={errors.parentContact}
-                                    touched={touched.parentContact}
-                                />
+                                <div className="relative flex flex-col gap-2">
+                                    <CustomFormField
+                                        name="parentContact"
+                                        label="Parent Contact*"
+                                        type="tel"
+                                        placeholder="Eg: 9876543210"
+                                    />
+                                </div>
 
-                                <CustomButton type="submit" className="absolute bottom-0 right-0 bg-black px-6 font-semibold rounded-lg text-lg py-2 w-56 text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
+
+                                <CustomButton type="submit" isDisabled={Object.keys(errors).length !== 0} className="absolute bottom-0 right-0 bg-black px-6 font-semibold rounded-lg text-lg py-2 w-56 text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer disabled:opacity-40">
                                     Register
                                 </CustomButton>
-
                             </Form>
+
                         )}
                     </Formik>
                 </div>

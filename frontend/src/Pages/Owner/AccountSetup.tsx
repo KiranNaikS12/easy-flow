@@ -1,61 +1,16 @@
 import { useState } from "react";
 import MinimalHeader from "../../components/Headers/MinimalHeader";
-import { Field, FieldArray, Form, Formik } from "formik";
-import type { AccountSetupField, AccountSetupValues } from "../../types/componentTypes.ts/AccountSetupTypes";
+import { FieldArray, Form, Formik } from "formik";
+import type { AccountSetupValues } from "../../types/componentTypes.ts/AccountSetupTypes";
 import { accountSetupValidationSchema } from "../../utils/validations/accountSetupValidation";
 import ValidationError from "../../components/Common/ValidationError";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { setCredentials } from "../../features/auth/authSlice";
+import { ACCOUNT_SETUP_FIELDS, SERVICE_SUGGESTIONS } from "../../constants/accountSetupStaticValues";
+import CustomFormField from "../../components/Manager/CustomFormField";
 
-
-const ACCOUNT_SETUP_FIELDS: AccountSetupField[] = [
-  {
-    id: 1,
-    label: "Enter Institution Name",
-    value: "institutionName",
-    type: "text",
-    placeholder: "Institution Name",
-  },
-  {
-    id: 2,
-    label: "Enter Institution Type",
-    value: "institutionType",
-    type: "text",
-    placeholder:
-      "Eg: Tuition Center, Coaching Center, Dance Center etc.",
-  },
-  {
-    id: 3,
-    label: "Enter Phone No.",
-    value: "phone",
-    type: "tel",
-    placeholder: "Eg: 9999999999",
-  },
-  {
-    id: 4,
-    label: "Enter Description",
-    value: "description",
-    type: "textarea",
-    placeholder: "Write something about the institution",
-  },
-];
-
-const SERVICE_SUGGESTIONS = [
-  "Primary",
-  "Upper Primary",
-  "Secondary (High School)",
-  "Higher Secondary (class 11 & 12)",
-  "Trading",
-  "NEET",
-  "JEE",
-  "Banking",
-  "Railway",
-  "Music",
-  "Dance",
-  "CS"
-];
 
 const INITIAL_VALUES: AccountSetupValues = {
   institutionName: "",
@@ -167,9 +122,11 @@ const AccountSetup = () => {
                 validationSchema={accountSetupValidationSchema}
                 onSubmit={handleSubmit}
               >
-                {({ values, errors, touched }) => {
+                {({ values, errors }) => {
 
                   const currentValue = values[currentField?.value];
+
+                  console.log(errors)
 
                   return (
                     <Form className="flex w-full flex-col gap-6">
@@ -187,29 +144,20 @@ const AccountSetup = () => {
                           </label>
 
                           {currentField.type === "textarea" ? (
-                            <Field
-                              as="textarea"
-                              id={currentField.value}
+                            <CustomFormField
                               name={currentField.value}
+                              type="text"
                               placeholder={currentField.placeholder}
+                              as="textarea"
                               rows={5}
-                              className={`w-full rounded-xl border px-4 py-3 pl-6 text-sm outline-none transition placeholder:font-thin placeholder:text-gray-400 focus:border-theme focus:ring-2 focus:ring-theme/20 
-                              ${errors[currentField.value] && touched[currentField.value] ? "border-red-400" : "border-gray-300"}  
-                           `}
                             />
                           ) : (
-                            <Field
-                              id={currentField.value}
+                            <CustomFormField
                               name={currentField.value}
-                              type={currentField.type}
+                              type="text"
                               placeholder={currentField.placeholder}
-                              className={`w-full rounded-xl border px-4 py-3 pl-6 text-sm outline-none transition placeholder:font-thin placeholder:text-gray-400 focus:border-theme focus:ring-2 focus:ring-theme/20 
-                               ${errors[currentField.value] && touched[currentField.value] ? "border-red-400" : "border-gray-300"}  
-                            `}
                             />
                           )}
-
-                          <ValidationError name={currentField.value} />
                         </div>
                       )}
 
@@ -379,6 +327,7 @@ const AccountSetup = () => {
                                   </div>
                                 )}
                               </div>
+                              <ValidationError name="services"/>
                             </div>
                           )}
                         </FieldArray>
@@ -414,7 +363,6 @@ const AccountSetup = () => {
                         ) : (
                           <button
                             type="submit"
-                            disabled={values.services?.length === 0}
                             className="cursor-pointer rounded-lg bg-theme px-6 py-2 text-white transition hover:bg-green-700 disabled:opacity-40"
                           >
                             Complete Setup
