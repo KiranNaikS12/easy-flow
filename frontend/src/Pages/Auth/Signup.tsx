@@ -14,6 +14,7 @@ import CustomButton from '../../components/Common/CustomButton'
 import { setCredentials } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const INITIAL_VALUES: signupFormData = {
@@ -40,7 +41,7 @@ const Signup = () => {
             const response = await res.json();
 
             if (!res.ok) {
-                console.log(response.message);
+                toast.error(response?.message)
                 return;
             }
 

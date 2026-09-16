@@ -13,6 +13,7 @@ import CustomButton from '../../components/Common/CustomButton'
 import type { singInFormData } from "../../types/authTypes/baseAuthType";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
 
@@ -32,6 +33,7 @@ const SignIn = () => {
             const response = await res.json();
 
             if (!res.ok) {
+                toast.error(response.message)
                 return;
             }
 
