@@ -12,7 +12,6 @@ import type { RootState } from "../../store/store";
 
 interface EnrollmentModalProps {
     onClose: () => void;
-    type: "trainer" | "member";
 }
 
 const INITIAL_VALUES: RegisterClientFormData = {
@@ -25,7 +24,7 @@ const INITIAL_VALUES: RegisterClientFormData = {
     parentContact: "",
 };
 
-const EnrollmentModal = ({ onClose, type }: EnrollmentModalProps) => {
+const EnrollmentModal = ({ onClose }: EnrollmentModalProps) => {
 
     const { userInfo } = useSelector((state: RootState) => state.auth)
 

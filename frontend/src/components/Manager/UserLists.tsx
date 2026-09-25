@@ -33,7 +33,7 @@ const UserLists = ({type}: UserListsProps) => {
 
       {/* Modal */}
       {isOpen && (
-        <EntrollmentModal onClose={close} type={type}/>
+        <EntrollmentModal onClose={close}/>
       )}
     </div>
   )
