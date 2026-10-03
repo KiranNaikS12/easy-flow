@@ -6,11 +6,11 @@ export interface UserData {
     email: string;
     roleId: Role;
     isProfileCompleted: boolean;
-    institutionName: string;
-    institutionType: string;
-    phone: string;
-    description: string;
-    services: string[];
+    institutionName?: string;
+    institutionType?: string;
+    phone?: string;
+    description?: string;
+    services?: string[];
     createdAt: Date | null;
     updatedAt: Date | null;
 }

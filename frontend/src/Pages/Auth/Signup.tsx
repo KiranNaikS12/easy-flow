@@ -15,7 +15,7 @@ import { setCredentials } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { useSignup } from '../../hooks/owner/useAuth';
 
 const INITIAL_VALUES: signupFormData = {
     email: "",
@@ -23,35 +23,25 @@ const INITIAL_VALUES: signupFormData = {
     confirmPassword: ""
 }
 
+
+
 const Signup = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    const handleSubmit = async (data: signupFormData) => {
-        const { email,  password } = data;
-        try {
-            const res = await fetch("http://localhost:5000/api/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password })
-            });
+    const signupMutation = useSignup();
 
-            const response = await res.json();
-
-            if (!res.ok) {
-                toast.error(response?.message)
-                return;
+    const handleSubmit = (data: signupFormData) => {
+        signupMutation.mutate(data, {
+            onSuccess: (data) => {
+                dispatch(setCredentials(data.user));
+                navigate("/account-setup");
+            },
+    
+            onError: (error) => {
+                toast.error(error.message);
             }
-
-            dispatch(setCredentials(response.user));
-
-            navigate('/account-setup');
-
-        } catch (error) {
-            console.log(error);
-        }
+        });
     };
 
     const handleGoogleSignIn = () => {
@@ -103,8 +93,15 @@ const Signup = () => {
                                             <PasswordField name="confirmPassword" label="Confirm Password" errors={errors.confirmPassword} touched={touched.confirmPassword} />
 
                                             {/* Custom reusable button component */}
-                                            <CustomButton type="submit" className="mt-2 w-full rounded-xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
-                                                Create an Account
+                                            <CustomButton
+                                                type="submit"
+                                                isDisabled={signupMutation.isPending}
+                                                className="mt-2 w-full rounded-xl bg-black px-4 py-3 text-sm font-semibold text-white"
+                                            >
+                                                {signupMutation.isPending
+                                                    ? "Creating Account..."
+                                                    : "Create an Account"
+                                                }
                                             </CustomButton>
 
                                         </Form>
