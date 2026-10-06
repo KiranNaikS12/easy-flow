@@ -1,4 +1,4 @@
-const API_URL = process.env.PUBLIC_API_URL;
+const API_URL = import.meta.env.PUBLIC_API_URL;
 
 export const apiClient = async <T>(
     endpoint: string,
@@ -6,6 +6,7 @@ export const apiClient = async <T>(
 ): Promise<T> => {
     const response = await fetch(`${API_URL}${endpoint}`, {
         ...options,
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
             ...options?.headers

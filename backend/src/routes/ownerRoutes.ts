@@ -15,7 +15,7 @@ const manageOwnerController = container.get<ManageOwnerController>('ManageOwnerC
 
 
 router.post('/account-setup', validate(accountSetupValidationSchema), (req, res) => manageOwnerController.setupAccount(req, res))
-router.post('/clients', authMiddleware, validate(clientRegisterSchema), (req, res) => manageClientController.registerClient(req, res))
+router.post('/client', authMiddleware, validate(clientRegisterSchema), (req, res) => manageClientController.registerClient(req, res))
 
 
 export default router;

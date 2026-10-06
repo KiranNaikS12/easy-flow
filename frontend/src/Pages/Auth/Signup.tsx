@@ -15,14 +15,13 @@ import { setCredentials } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSignup } from '../../hooks/owner/useAuth';
+import { useSignup } from '../../hooks/admin/useAuth';
 
 const INITIAL_VALUES: signupFormData = {
     email: "",
     password: "",
     confirmPassword: ""
 }
-
 
 
 const Signup = () => {

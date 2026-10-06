@@ -44,13 +44,13 @@ export class AuthController {
 
       const token =  this.generateAuthToken(user);
 
-      console.log(token)
-
       setAuthCookie(res, token);
+
+      const { password, ...safeUser } = user.toObject()
 
       res.status(HTTPStatusCode.OK).json({
         message: CustomMessages.LOGEDIN,
-        user: user.toObject()
+        user: safeUser,
       });
   }
 

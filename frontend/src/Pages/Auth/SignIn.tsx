@@ -14,37 +14,26 @@ import type { singInFormData } from "../../types/authTypes/baseAuthType";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
+import { useSignIn } from "../../hooks/admin/useAuth";
 
 const SignIn = () => {
 
     const dispatch = useDispatch();
-    
+
+    const signInMutation = useSignIn();
+
     const handleSubmit = async(data: singInFormData) => {
-         try { 
-            const res = await fetch("http://localhost:5000/api/auth/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify(data)
-            })
+        signInMutation.mutate(data, {
+            onSuccess: (data) => {
+                dispatch(setCredentials(data.user));
+            },
 
-            const response = await res.json();
-
-            if (!res.ok) {
-                toast.error(response.message)
-                return;
+            onError: (error) => {
+                toast.error(error.message)
             }
-
-            dispatch(setCredentials(response.user))
-
-         } catch(error) {
-            console.log(error)
-         }
+        })
     }
-
-
+    
     const handleGoogleSignIn = () => {
 
     }
@@ -93,7 +82,7 @@ const SignIn = () => {
                                         <PasswordField name="password" label="Password" errors={errors.password} touched={touched.password}/>
 
                                         {/* Custom reusable button component */}
-                                        <CustomButton type="submit" className="mt-2 w-full rounded-xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
+                                        <CustomButton type="submit" isDisabled={signInMutation.isPending}  className="mt-2 w-full rounded-xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98] cursor-pointer">
                                             Sign In
                                         </CustomButton>
                       

@@ -8,6 +8,8 @@ import type { RegisterClientFormData } from "../../types/userType/clientTypes";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
+import { useCreateClient } from "../../hooks/admin/useCreateClient";
+import { toast } from "react-toastify";
 
 
 interface EnrollmentModalProps {
@@ -28,39 +30,32 @@ const EnrollmentModal = ({ onClose }: EnrollmentModalProps) => {
 
     const { userInfo } = useSelector((state: RootState) => state.auth)
 
-    const handleSubmit = async (data: RegisterClientFormData) => {
-        try {
+    const registerClientMutation = useCreateClient();
 
-            const res = await fetch("http://localhost:5000/api/owner/clients", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
+    const handleSubmit = async(data: RegisterClientFormData) => {
+        registerClientMutation.mutate(data, {
+            onSuccess: (response) => {
+                Swal.fire({
+                    title: "Success",
+                    text: response.message,
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false,
+                    position: "top-end",
+                    toast: true,
+                }).then(() => {
+                    onClose();
+                });
+            },
 
-            if (!res.ok) {
-                return;
+            onError: (error) => {
+                toast.error(error.message)
             }
 
-            const response = await res.json();
-
-            Swal.fire({
-                title: "Success",
-                text: response.message,
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false,
-                position: "top-end",
-                toast: true,
-            }).then(() => {
-                onClose()
-            })
-
-        } catch (error) {
-            console.log(error)
-        }
+        })
     }
+
+    
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
@@ -148,7 +143,7 @@ const EnrollmentModal = ({ onClose }: EnrollmentModalProps) => {
                                     >
                                         <option value="">Select Category</option>
 
-                                        {userInfo?.services.map((category) => (
+                                        {userInfo?.services?.map((category) => (
                                             <option key={category} value={category}>
                                                 {category}
                                             </option>
