@@ -11,7 +11,7 @@ export class JWTService implements IJWTService {
         }
 
         const token = jwt.sign({userId, roleId} as JWTPayload, process.env.JWT_SECRET, {
-            expiresIn: '3d'
+            expiresIn: '1d'
         })
 
         return token;

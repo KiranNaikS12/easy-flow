@@ -10,5 +10,7 @@ export const CustomMessages = {
     LOGOUT_ERROR: 'Something went wrong',
     VALIDATION_ERROR: 'Validation failed',
     ACCOUNT_CREATION_SUCCESSFULL: 'Account setup successfull',
-    INSTITUTION_EXISTS: 'Institution name already exists'
+    INSTITUTION_EXISTS: 'Institution name already exists',
+    TOKEN_EXPIRED: 'Token Expired',
+    INVALID_TOKEN: 'Invalid Token'
 }
